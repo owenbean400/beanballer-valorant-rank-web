@@ -1,0 +1,133 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <nav>
+            <a>Tracker</a>
+            <h1>BeanBaller</h1>
+        </nav>
+
+        <main id="main">
+            <div>5 Second Video Loop</div>
+
+            <div>
+                <div>Valorant Rank Player</div>
+                <div>Photo</div>
+            </div>
+
+            <div>
+                <div>Current Rank: Diamond 3</div>
+                <div>ECAC Rookie of Month</div>
+                <div></div>
+            </div>
+
+            <div>{{ count }}</div>
+
+            <div>
+                <div>Rank History 10 Matches</div>
+                <div v-for="item in items" class="rank-container">
+                    <div>{{ item.date }}</div>
+                    <div class="rank-stat-container">
+                        <div class="img"></div>
+                        <div class="title-txt">{{ item.character }}</div>
+                    </div>
+                    <div class="rank-stat-container">
+                        <div class="img"></div>
+                        <div class="title-txt">{{ item.map }}</div>
+                    </div>
+                    <div>{{ item.rounds_won }} - {{ item.rounds_lost }}</div>
+                    <div class="rank-extra-container">
+                        <div class="rank-stat-container">
+                            <div class="title-txt">K/D</div>
+                            <div class="stat-txt">{{ item.stats.kills / item.stats.deaths }}</div>
+                        </div>
+                        <div class="rank-stat-container">
+                            <div class="title-txt">Assists</div>
+                            <div class="stat-txt">{{ item.stats.assists }}</div>
+                        </div>
+                        <div class="rank-stat-container">
+                            <div class="title-txt">DMG</div>
+                            <div class="stat-txt">{{ item.stats.damage_made - item.stats.damage_received }}</div>
+                        </div>
+                        <div class="rank-stat-container">
+                            <div class="title-txt">HS%</div>
+                            <div class="stat-txt">{{ item.stats.headshots / (item.stats.headshots + item.stats.bodyshots + item.stats.legshots) }}</div>
+                        </div>
+                    </div>
+                    <div class="rank-stat-container">
+                        <div class="title-txt">RR</div>
+                        <div class="stat-txt">{{ item.mmr_change_to_last_game }}</div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <footer>
+
+        </footer>
+
+        <script src="./vue-cdn.js"></script>
+        <script>
+            const { createApp } = Vue
+
+            const app = createApp({
+                data() {
+                    return {
+                        count: 0,
+                        items: [
+                            {
+                                puuid: "",
+                                match_id: "",
+                                raw_date_int: 0,
+                                date: "01/01/01",
+                                mmr_change_to_last_game: 17,
+                                map: "Pearl",
+                                character: "Astra",
+                                stats: {
+                                    score: 1000,
+                                    kills: 24,
+                                    deaths: 20,
+                                    assists: 4,
+                                    bodyshots: 21,
+                                    headshots: 16,
+                                    legshots: 3,
+                                    damage_made: 2403,
+                                    damage_received: 2354
+                                },
+                                rounds_won: 13,
+                                rounds_lost: 7
+                            },
+                            {
+                                puuid: "",
+                                match_id: "",
+                                raw_date_int: 0,
+                                date: "01/01/01",
+                                mmr_change_to_last_game: -20,
+                                map: "Pearl",
+                                character: "Astra",
+                                stats: {
+                                    score: 1000,
+                                    kills: 18,
+                                    deaths: 32,
+                                    assists: 4,
+                                    bodyshots: 21,
+                                    headshots: 16,
+                                    legshots: 3,
+                                    damage_made: 2403,
+                                    damage_received: 2354
+                                },
+                                rounds_won: 10,
+                                rounds_lost: 13
+                            }
+                        ]
+                    }
+                }
+            })
+
+            app.mount('#main')
+        </script>
+    </body>
+</html>
