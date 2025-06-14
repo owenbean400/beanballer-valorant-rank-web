@@ -1,35 +1,326 @@
 $bgColor: #EEEEEE
+$breakpoints: (phone: 640px, 
+               tablet: 768px, 
+               desktop: 1024px)
 
 body
-    main
-        .rank-container
-            background-color: rgba(230, 230, 230, 0.9)
+    padding: 0
+    margin: 0
+    font-family: "Kanit", sans-serif;
+    
+
+    @media (max-width: 768px)
+        nav
+            position: fixed
+            background-color: black
+            width: 100vw
+            height: 32px
             display: flex
-            align-items: center
-            justify-content: space-around
-            padding: 32px 8px
-            border-radius: 16px
+            justify-content: center
+            color: white
+            z-index: 9999
 
-            .rank-extra-container
-                display: grid
-                grid-template-columns: auto auto
-                justify-content: space-evenly
+            a
+                font-size: 10px
+                padding: 0 8px
+                cursor: pointer
+                color: white
+                text-decoration: none
+                align-self: center
+                margin: 0 0 4px 0
+                &:hover
+                    color: rgb(255, 70, 85)
 
-            .rank-stat-container
-                display: grid
-                grid-auto-columns: auto
-                justify-items: center
+            .trapezoid
+                --p: 50px
+                height: 48px
+                aspect-ratio: 7/2
+                clip-path: polygon(var(--p) 100%,calc(100% - var(--p)) 100%,100% 0,0 0)
+                background: rgb(255, 70, 85)
+                display: flex
                 justify-content: center
-
-                .title-txt
-                    color: #333
-                    font-size: 16px
-
-                .stat-txt
+                align-content: center
+                h1
+                    font-size: 18px
+                    font-weight: regular
+                    margin-top: 6px
                     color: black
-                    font-size: 24px
 
-                .img
-                    width: 48px
-                    height: 48px
-                    background-color: gray
+    @media (min-width: 768px)
+        nav
+            position: fixed
+            background-color: black
+            width: 100vw
+            height: 32px
+            display: flex
+            justify-content: center
+            color: white
+            z-index: 9999
+
+            a
+                padding: 0 8px
+                cursor: pointer
+                color: white
+                text-decoration: none
+                align-self: center
+                margin: 0 0 4px 0
+                &:hover
+                    color: rgb(255, 70, 85)
+
+            .trapezoid
+                --p: 50px
+                height: 64px
+                aspect-ratio: 8/2
+                clip-path: polygon(var(--p) 100%,calc(100% - var(--p)) 100%,100% 0,0 0)
+                background: rgb(255, 70, 85)
+                display: flex
+                justify-content: center
+                align-content: center
+                
+                h1
+                    font-weight: regular
+                    margin-top: 12px
+                    color: black
+
+    main
+        padding: 30px 0 0 0
+
+        #video-background
+            width: 100%
+            max-height: 800px
+            overflow: hidden
+            #video-highlight
+                width: 100%
+                height: auto
+
+        .header-window
+            background-color: white
+
+            #jersey-image
+                max-width: 400px
+                width: 80vw
+                margin: -48px 0 0 calc(50vw - 300px)
+
+        .caption-window
+            background-color: rgb(255, 70, 85)
+
+            h2
+                margin: 0
+                padding: 32px 16px
+                text-align: center
+
+        .rank-window
+            background-color: rgb(255, 70, 85)
+            padding: 32px
+            display: none
+
+            h2
+                max-width: 960px
+                margin: 12px auto
+                color: black
+
+            .rank-container
+                background-color: rgb(255, 70, 85)
+                padding: 0px
+                border-radius: 16px
+                margin: 32px auto
+                max-width: 960px
+                cursor: pointer
+                transition: 0.4s box-shadow
+                &:hover
+                    -webkit-box-shadow: 3px 3px 15px 3px rgba(0,0,0,0.5); 
+                    box-shadow: 3px 3px 15px 1px rgba(0,0,0,0.5);
+
+                .rank-image-container
+                    height: 120px
+                    width: 100%
+                    border-radius: 16px
+                    overflow: hidden
+
+                .rank-info-container
+                    display: grid
+                    grid-template-columns: 200px auto
+                    align-items: center
+                    justify-content: space-between
+                    height: 120px
+                    margin: -120px 16px 0 16px
+                    position: absolute
+                    width: calc(100% - 84px)
+                    max-width: 944px
+
+                    .rank-game-container
+                        display: grid
+                        grid-template-columns: auto
+                        width: 200px
+
+                        .rank-date-txt
+                            font-size: 24px
+                            font-weight: bold
+                            margin: 0
+
+                        .rank-map-container
+                            display: grid
+                            grid-template-columns: 56px auto
+
+                            .rank-map-score-txt
+                                margin: 0
+                                font-size: 18px
+
+
+                            .rank-rr-txt
+                                margin: 0
+                                font-size: 18px
+                                font-weight: bold
+
+                            .img
+                                width: 48px
+                                height: 48px
+                                border-radius: 8px
+                                background-position: center
+                                background-repeat: no-repeat
+                                background-size: cover
+                                background-color: rgba(0, 0, 0, 0.2)
+
+
+                    .rank-stats-container
+                        display: flex
+                        justify-content: space-between
+
+                        .rank-stat-container
+                            display: grid
+                            grid-template-columns: auto
+                            margin: 0 16px
+
+                            p
+                                margin: 0
+                                font-size: 20px
+    
+    footer
+        margin: 16px
+        font-size: 12px
+        font-weight: light
+
+.map-bk
+    background-position: center
+    background-repeat: no-repeat
+    background-size: cover
+    filter: blur(1px)
+    -webkit-filter: blur(1px)
+    height: calc(100% + 16px)
+    width: calc(100% + 16px)
+    margin: -8px 0 0 -8px
+    opacity: 0.5
+
+.ascent-bk
+    background-image: url("https://media.valorant-api.com/maps/7eaecc1b-4337-bbf6-6ab9-04b8f06b3319/listviewicon.png")
+
+.split-bk
+    background-image: url("https://media.valorant-api.com/maps/d960549e-485c-e861-8d71-aa9d1aed12a2/listviewicon.png")
+
+.fracture-bk
+    background-image: url("https://media.valorant-api.com/maps/b529448b-4d60-346e-e89e-00a4c527a405/listviewicon.png")
+
+.bind-bk
+    background-image: url("https://media.valorant-api.com/maps/2c9d57ec-4431-9c5e-2939-8f9ef6dd5cba/listviewicon.png")
+
+.breeze-bk
+    background-image: url("https://media.valorant-api.com/maps/2fb9a4fd-47b8-4e7d-a969-74b4046ebd53/listviewicon.png")
+
+.abyss-bk
+    background-image: url("https://media.valorant-api.com/maps/224b0a95-48b9-f703-1bd8-67aca101a61f/listviewicon.png")
+
+.lotus-bk
+    background-image: url("https://media.valorant-api.com/maps/2fe4ed3a-450a-948b-6d6b-e89a78e680a9/listviewicon.png")
+
+.sunset-bk
+    background-image: url("https://media.valorant-api.com/maps/92584fbe-486a-b1b2-9faa-39b0f486b498/listviewicon.png")
+
+.pearl-bk
+    background-image: url("https://media.valorant-api.com/maps/fd267378-4d1d-484f-ff52-77821ed10dc2/listviewicon.png")
+
+.icebox-bk
+    background-image: url("https://media.valorant-api.com/maps/e2ad5c54-4114-a870-9641-8ea21279579a/listviewicon.png")
+
+.haven-bk
+    background-image: url("https://media.valorant-api.com/maps/2bee0dc9-4ffe-519b-1cbd-7fbe763a6047/listviewicon.png")
+
+.gekko-bk
+    background-image: url("https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png")
+
+.fade-bk
+    background-image: url("https://media.valorant-api.com/agents/dade69b4-4f5a-8528-247b-219e5a1facd6/displayicon.png")
+
+.breach-bk
+    background-image: url("https://media.valorant-api.com/agents/5f8d3a7f-467b-97f3-062c-13acf203c006/displayicon.png")
+
+.deadlock-bk
+    background-image: url("https://media.valorant-api.com/agents/cc8b64c8-4b25-4ff9-6e7f-37b4da43d235/displayicon.png")
+
+.tejo-bk
+    background-image: url("https://media.valorant-api.com/agents/b444168c-4e35-8076-db47-ef9bf368f384/displayicon.png")
+
+.raze-bk
+    background-image: url("https://media.valorant-api.com/agents/f94c3b30-42be-e959-889c-5aa313dba261/displayicon.png")
+
+.chamber-bk
+    background-image: url("https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png")
+
+.kayo-bk
+    background-image: url("https://media.valorant-api.com/agents/601dbbe7-43ce-be57-2a40-4abd24953621/displayicon.png")
+
+.skye-bk
+    background-image: url("https://media.valorant-api.com/agents/6f2a04ca-43e0-be17-7f36-b3908627744d/displayicon.png")
+
+.cypher-bk
+    background-image: url("https://media.valorant-api.com/agents/117ed9e3-49f3-6512-3ccf-0cada7e3823b/displayicon.png")
+
+.sova-bk
+    background-image: url("https://media.valorant-api.com/agents/ded3520f-4264-bfed-162d-b080e2abccf9/displayicon.png")
+
+.killjoy-bk
+    background-image: url("https://media.valorant-api.com/agents/1e58de9c-4950-5125-93e9-a0aee9f98746/displayicon.png")
+
+.harbor-bk
+    background-image: url("https://media.valorant-api.com/agents/95b78ed7-4637-86d9-7e41-71ba8c293152/displayicon.png")
+
+.vyse-bk
+    background-image: url("https://media.valorant-api.com/agents/efba5359-4016-a1e5-7626-b1ae76895940/displayicon.png")
+
+.viper-bk
+    background-image: url("https://media.valorant-api.com/agents/707eab51-4836-f488-046a-cda6bf494859/displayicon.png")
+
+.phoenix-bk
+    background-image: url("https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png")
+
+.astra-bk
+    background-image: url("https://media.valorant-api.com/agents/41fb69c1-4189-7b37-f117-bcaf1e96f1bf/displayicon.png")
+
+.brimstone-bk
+    background-image: url("https://media.valorant-api.com/agents/9f0d8ba9-4140-b941-57d3-a7ad57c6b417/displayicon.png")
+
+.iso-bk
+    background-image: url("https://media.valorant-api.com/agents/0e38b510-41a8-5780-5e8f-568b2a4f2d6c/displayicon.png")
+
+.clove-bk
+    background-image: url("https://media.valorant-api.com/agents/1dbf2edd-4729-0984-3115-daa5eed44993/displayicon.png")
+
+.neon-bk
+    background-image: url("https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png")
+
+.yoru-bk
+    background-image: url("https://media.valorant-api.com/agents/7f94d92c-4234-0a36-9646-3a87eb8b5c89/displayicon.png")
+
+.waylay-bk
+    background-image: url("https://media.valorant-api.com/agents/df1cb487-4902-002e-5c17-d28e83e78588/displayicon.png")
+
+.sage-bk
+    background-image: url("https://media.valorant-api.com/agents/569fdd95-4d10-43ab-ca70-79becc718b46/displayicon.png")
+
+.reyna-bk
+    background-image: url("https://media.valorant-api.com/agents/a3bfb853-43b2-7238-a4f1-ad90e9e46bcc/displayicon.png")
+
+.omen-bk
+    background-image: url("https://media.valorant-api.com/agents/8e253930-4c05-31dd-1b6c-968525494517/displayicon.png")
+
+.jett-bk
+    background-image: url("https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png")
