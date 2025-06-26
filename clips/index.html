@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="../style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    </head>
+
+    <body>
+        <nav>
+            <a href="https://valorantesports.com/en-US/pickems/113482053125573837/picks/1263478127707871988/2663984292030924397">Pick Ems</a>
+            <a href="https://tracker.gg/valorant/profile/riot/BeanBaller%23bean">Tracker</a>
+            <a href="./index.html">Clips</a>
+            <div class="trapezoid">
+                <h1>BeanBaller</h1>
+            </div>
+            <a href="https://www.twitch.tv/beaneballer">Twitch</a>
+            <a href="https://www.ecacesports.com/2024/03/ecac-esports-announces-player-and-rookie-of-the-month-for-february/">Ex ECAC Rookie</a>
+        </nav>
+
+        <main id="main">
+            <div class="clip-headers-container">
+                <h2>BeanBaller Clips</h2>
+                <h3>3K in 5 Seconds</h3>
+            </div>
+
+            <div class="clips-container">
+                <div class="clip-container" v-for="clip_id in clip_ids">
+                    <video
+                        controls
+                        class="clip-video">
+                        <source :src="clip_id + '.mp4'" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </main>
+
+
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script>
+            const { createApp } = Vue
+
+            const app = createApp({
+                data() {
+                    return {
+                        count: 0,
+                        clip_ids: [
+                            "23b99bfc-b91e-438a-8a73-1b45bc21f96c",
+                            "beea6c5d-852f-43f4-94fb-e55b7323e4b7",
+                            "c8322c06-b4b4-47f9-81c8-7bb890dd7260",
+                            "c6c934de-3909-44ff-a848-462062e30042",
+                            "a442cb0f-3765-4010-9db6-995ac25ebfc3",
+                            "4a9c0952-e4bf-409a-a6f3-93f17cc33bf2"
+                        ]
+                    }
+                }
+            })
+
+            app.mount('#main')
+        </script>
+    </body>
+</html>
