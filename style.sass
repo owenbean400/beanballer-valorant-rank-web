@@ -209,26 +209,53 @@ body
             flex-wrap: wrap
             justify-content: center
             max-width: 2000px
-            margin: 12px auto
+            margin: 12px auto 32px auto
 
             .clip-container
-                background-color: black
-
                 @media (max-width: 768px)
-                    width: 300px
                     margin: 12px
-
-                    .clip-video
-                        width: 300px
-                        height: auto
-
                 @media (min-width: 768px)
-                    width: 600px
                     margin: 24px
 
-                    .clip-video
+                .trapezoid
+                    --p: 50px
+                    height: 32px
+                    aspect-ratio: 16/2
+                    clip-path: polygon(var(--p) 100%,calc(100% - var(--p)) 100%,100% 0,0 0)
+                    background: rgb(255, 70, 85)
+                    display: flex
+                    justify-content: center
+                    align-content: center
+                    margin: 0px auto
+                    cursor: pointer
+                    text-decoration: none
+                    color: black
+                    padding: 4px 0 0 0
+                    &:hover
+                        background: rgb(128, 15, 25)
+                    
+                    a
+                        font-weight: regular
+                        margin-top: 4px
+                        color: black
+                        text-decoration: none
+
+                .video-container
+                    background-color: black
+
+                    @media (max-width: 768px)
+                        width: 300px
+
+                        .clip-video
+                            width: 300px
+                            height: auto
+
+                    @media (min-width: 768px)
                         width: 600px
-                        height: auto
+
+                        .clip-video
+                            width: 600px
+                            height: auto
 
     
     footer

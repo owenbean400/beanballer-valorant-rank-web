@@ -9,9 +9,9 @@
 
     <body>
         <nav>
-            <a href="https://valorantesports.com/en-US/pickems/113482053125573837/picks/1263478127707871988/2663984292030924397">Pick Ems</a>
-            <a href="https://tracker.gg/valorant/profile/riot/BeanBaller%23bean">Tracker</a>
-            <a href="./index.html">Clips</a>
+            <a href="https://valorantesports.com/en-US/pickems/113482053125573837/picks/1263478127707871988/5090123810564294632">Pick Ems</a>
+            <a href="https://tracker.gg/valorant/profile/riot/beanballer%20com%23web">Tracker</a>
+            <a href="./clips">Clips</a>
             <div class="trapezoid">
                 <h1>BeanBaller</h1>
             </div>
@@ -22,22 +22,25 @@
         <main id="main">
             <div class="clip-headers-container">
                 <h2>BeanBaller Clips</h2>
-                <h3>3K in 5 Seconds</h3>
             </div>
 
             <div class="clips-container">
-                <div class="clip-container" v-for="clip_id in clip_ids">
-                    <video
-                        controls
-                        class="clip-video">
-                        <source :src="clip_id + '.mp4'" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
+                <div class="clip-container" v-for="clip in clips">
+                    <p>{{ clip.description }}</p>
+                    <div class="video-container">
+                        <video
+                            controls
+                            class="clip-video">
+                            <source :src="clip.full_url" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <a class="trapezoid" :href="'https://tracker.gg/valorant/match/' + clip.match_id" target="_blank">Tracker Match</a>
                 </div>
             </div>
         </main>
 
-
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
         <script>
             const { createApp } = Vue
@@ -45,16 +48,15 @@
             const app = createApp({
                 data() {
                     return {
-                        count: 0,
-                        clip_ids: [
-                            "23b99bfc-b91e-438a-8a73-1b45bc21f96c",
-                            "beea6c5d-852f-43f4-94fb-e55b7323e4b7",
-                            "c8322c06-b4b4-47f9-81c8-7bb890dd7260",
-                            "c6c934de-3909-44ff-a848-462062e30042",
-                            "a442cb0f-3765-4010-9db6-995ac25ebfc3",
-                            "4a9c0952-e4bf-409a-a6f3-93f17cc33bf2"
-                        ]
+                        clips: []
                     }
+                },
+                mounted () {
+                    axios({
+                        method: 'get',
+                        url: "https://api.beanballer.com/clips"
+                    })
+                    .then(response => (this.clips = response.data))
                 }
             })
 
