@@ -1,5 +1,19 @@
 $bgColor: #EEEEEE
 $breakpoints: (phone: 640px, tablet: 768px, desktop: 1024px)
+$primaryColor: rgb(255, 70, 85)
+$primaryColorHighlight: rgb(255, 112, 124)
+
+@keyframes loading-animation
+    0%
+        background-position:33.4% 100%,66.6% 100%
+    10%
+        background-position:33.4% 100%,66.6% 100%
+    40%
+        background-position:33.4% 0,100% 100%
+    70%
+        background-position:0 100%,66.6% 0
+    100%
+        background-position:33.4% 100%,66.6% 100%
 
 body
     padding: 0
@@ -26,14 +40,14 @@ body
                 align-self: center
                 margin: 0 0 4px 0
                 &:hover
-                    color: rgb(255, 70, 85)
+                    color: $primaryColor
 
             .trapezoid
                 --p: 50px
                 height: 48px
                 aspect-ratio: 7/2
                 clip-path: polygon(var(--p) 100%,calc(100% - var(--p)) 100%,100% 0,0 0)
-                background: rgb(255, 70, 85)
+                background: $primaryColor
                 display: flex
                 justify-content: center
                 align-content: center
@@ -62,14 +76,14 @@ body
                 align-self: center
                 margin: 0 0 4px 0
                 &:hover
-                    color: rgb(255, 70, 85)
+                    color: $primaryColor
 
             .trapezoid
                 --p: 50px
                 height: 64px
                 aspect-ratio: 8/2
                 clip-path: polygon(var(--p) 100%,calc(100% - var(--p)) 100%,100% 0,0 0)
-                background: rgb(255, 70, 85)
+                background: $primaryColor
                 display: flex
                 justify-content: center
                 align-content: center
@@ -80,7 +94,7 @@ body
                     color: black
 
     main
-        padding: 30px 0 0 0
+        padding: 32px 0 48px 0
 
         #video-background
             width: 100%
@@ -99,7 +113,7 @@ body
                 margin: -48px 0 0 calc(50vw - 300px)
 
         .caption-window
-            background-color: rgb(255, 70, 85)
+            background-color: $primaryColor
 
             h2
                 margin: 0
@@ -107,7 +121,7 @@ body
                 text-align: center
 
         .rank-window
-            background-color: rgb(255, 70, 85)
+            background-color: $primaryColor
             padding: 32px
             display: none
 
@@ -117,7 +131,7 @@ body
                 color: black
 
             .rank-container
-                background-color: rgb(255, 70, 85)
+                background-color: $primaryColor
                 padding: 0px
                 border-radius: 16px
                 margin: 32px auto
@@ -222,7 +236,7 @@ body
                     height: 32px
                     aspect-ratio: 16/2
                     clip-path: polygon(var(--p) 100%,calc(100% - var(--p)) 100%,100% 0,0 0)
-                    background: rgb(255, 70, 85)
+                    background: $primaryColor
                     display: flex
                     justify-content: center
                     align-content: center
@@ -232,7 +246,7 @@ body
                     color: black
                     padding: 4px 0 0 0
                     &:hover
-                        background: rgb(128, 15, 25)
+                        background: $primaryColorHighlight
                     
                     a
                         font-weight: regular
@@ -257,11 +271,47 @@ body
                             width: 600px
                             height: auto
 
+        .fetch-more-button
+            background-color: $primaryColor
+            cursor: pointer
+            height: 64px
+            width: 196px
+            border-radius: 8px
+            border: none
+            color: black
+            margin: 8px auto
+            display: block
+            &:hover
+                background-color: $primaryColorHighlight
+
+        .loading-graphic
+            margin: 8px auto
+            height: 80px
+            aspect-ratio: 1
+            display: grid
+            $background-loading: no-repeat linear-gradient($primaryColor 0 0)
+            &::before
+                content: ""
+                background: $background-loading, $background-loading
+                background-size: 25% 50%
+                animation: loading-animation 1.5s infinite linear
+            &::after
+                content: ""
+                background: $background-loading, $background-loading
+                background-size: 25% 50%
+                animation: loading-animation 1.5s infinite linear
+                transform: scale(-1)
+
+        .no-clip-txt
+            color: black
+            text-align: center
+
     
     footer
         margin: 16px
         font-size: 12px
         font-weight: light
+        margin: 8px auto
 
 .map-bk
     background-position: center

@@ -38,6 +38,9 @@
                     <a class="trapezoid" :href="'https://tracker.gg/valorant/match/' + clip.match_id" target="_blank">Tracker Match</a>
                 </div>
             </div>
+            <div v-if="loading" class="loading-graphic"></div>
+            <button v-else-if="lastEvalKey !== ''" @click="fetchMoreClips" class="fetch-more-button">Load More Clips</button>
+            <p v-else class="no-clip-txt">No more clips</p>
         </main>
 
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -48,15 +51,37 @@
             const app = createApp({
                 data() {
                     return {
-                        clips: []
+                        clips: [],
+                        lastEvalKey: "",
+                        loading: true,
                     }
                 },
                 mounted () {
                     axios({
                         method: 'get',
-                        url: "https://api.beanballer.com/clips"
+                        url: "https://api.beanballer.com/clips?pageLength=6&lastEvalKey=" + this.lastEvalKey
                     })
-                    .then(response => (this.clips = response.data))
+                    .then(response => {
+                        this.clips = response.data.clips;
+                        this.lastEvalKey = response.data.last_eval_key_uuid;
+                        this.loading = false;
+                    })
+                },
+                methods: {
+                    fetchMoreClips(event) {
+                        if (!this.loading && this.lastEvalKey !== "") {
+                            this.loading = true;
+                            axios({
+                                method: 'get',
+                                url: "https://api.beanballer.com/clips?pageLength=6&lastEvalKey=" + this.lastEvalKey
+                            })
+                            .then(response => {
+                                this.clips = [...this.clips, ...response.data.clips];
+                                this.lastEvalKey = response.data.last_eval_key_uuid;
+                                this.loading = false;
+                            })
+                        }
+                    }
                 }
             })
 
