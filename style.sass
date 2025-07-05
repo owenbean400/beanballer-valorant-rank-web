@@ -142,21 +142,30 @@ body
                     box-shadow: 3px 3px 15px 1px rgba(0,0,0,0.5)
 
                 .rank-image-container
-                    height: 120px
                     width: 100%
                     border-radius: 16px
                     overflow: hidden
 
+                    @media (min-width: 768px)
+                        height: 120px
+                    @media (max-width: 768px)
+                        height: 140px
+
                 .rank-info-container
                     display: grid
-                    grid-template-columns: 200px auto
                     align-items: center
                     justify-content: space-between
-                    height: 120px
-                    margin: -120px 16px 0 16px
                     position: absolute
                     width: calc(100% - 84px)
                     max-width: 944px
+                    @media (min-width: 768px)
+                        height: 120px
+                        margin: -120px 16px 0 16px
+                        grid-template-columns: 200px auto
+                    @media (max-width: 768px)
+                        height: 140px
+                        margin: -140px 16px 0 16px
+                        grid-template-columns: 100px auto
 
                     .rank-game-container
                         display: grid
@@ -167,7 +176,10 @@ body
                             font-size: 20px
                             font-weight: bold
                             line-height: 90%
-                            margin: 0 0 8px 0
+                            @media (min-width: 768px)
+                                margin: 0 0 8px 0
+                            @media (max-width: 768px)
+                                margin: 4px 0 24px 0
 
                         .rank-map-container
                             display: grid
@@ -196,24 +208,42 @@ body
                     .rank-stats-container
                         display: flex
                         justify-content: space-between
+                        @media (min-width: 768px)
+                            flex-direction: row
+                        @media (max-width: 768px)
+                            flex-direction: column
 
                         .rank-stat-kda
                             text-align: right
 
                         .rank-stat-container
                             display: grid
-                            grid-template-columns: auto
                             margin: 0 8px 0 0
-                            width: 80px
                             text-align: right
+                            @media (min-width: 768px)
+                                width: 80px
+                                grid-template-columns: auto
+                                align-items: start
+                            @media (max-width: 768px)
+                                width: 120px
+                                align-items: center
+                                grid-template-columns: auto auto
 
                             .rank-stat-txt-header
                                 margin: 0
-                                font-size: 18px
+                                @media (min-width: 768px)
+                                    font-size: 18px
+                                @media (max-width: 768px)
+                                    font-size: 16px
 
                             .rank-stat-txt-info
                                 margin: 0
-                                font-size: 24px
+                                @media (min-width: 768px)
+                                    font-size: 24px
+                                    font-weight: normal
+                                @media (max-width: 768px)
+                                    font-size: 16px
+                                    font-weight: bold
 
         .clip-headers-container
             text-align: center
