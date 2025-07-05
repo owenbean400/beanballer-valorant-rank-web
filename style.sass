@@ -137,6 +137,8 @@ body
                 max-width: 960px
                 cursor: pointer
                 transition: 0.4s box-shadow
+                display: block
+                color: black
                 &:hover
                     -webkit-box-shadow: 3px 3px 15px 3px rgba(0,0,0,0.5)
                     box-shadow: 3px 3px 15px 1px rgba(0,0,0,0.5)
@@ -170,7 +172,7 @@ body
                     .rank-game-container
                         display: grid
                         grid-template-columns: auto
-                        width: 80px
+                        width: 120px
 
                         .rank-date-txt
                             font-size: 20px
@@ -319,7 +321,14 @@ body
             border: none
             color: black
             margin: 8px auto
-            display: block
+            display: flex
+            text-align: center
+            text-decoration: none
+            padding-inline: 6px
+            align-items: center
+            justify-content: center
+            font-size: 18px
+            font-weight: normal
             &:hover
                 background-color: $primaryColorHighlight
 
@@ -342,6 +351,22 @@ body
                 transform: scale(-1)
 
         .no-clip-txt
+            color: black
+            text-align: center
+
+        .rank-headers-container
+            text-align: center
+            margin-top: 80px
+
+            h2
+                font-size: 24px
+                margin: 8px 0 4px 0
+            
+            h3
+                font-size: 18px
+                margin: 4px 0
+
+        .no-rank-txt
             color: black
             text-align: center
 
@@ -395,6 +420,9 @@ body
 
 .haven-bk
     background-image: url("https://media.valorant-api.com/maps/2bee0dc9-4ffe-519b-1cbd-7fbe763a6047/listviewicon.png")
+
+.corrode-bk
+    background-image: url("https://media.valorant-api.com/maps/1c18ab1f-420d-0d8b-71d0-77ad3c439115/listviewicon.png")
 
 .gekko-bk
     background-image: url("https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png")

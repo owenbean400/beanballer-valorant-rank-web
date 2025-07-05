@@ -3,7 +3,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="../style.css">
         <meta name="viewport" content="width=device-width, initial-scale=1" />
     </head>
 
@@ -11,32 +11,21 @@
         <nav>
             <a href="https://valorantesports.com/en-US/pickems/113482053125573837/picks/1263478127707871988/5090123810564294632">Pick Ems</a>
             <a href="https://tracker.gg/valorant/profile/riot/beanballer%20com%23web">Tracker</a>
-            <a href="./clips">Clips</a>
+            <a href="../clips">Clips</a>
             <div class="trapezoid">
                 <h1>BeanBaller</h1>
             </div>
             <a href="https://www.twitch.tv/beaneballer">Twitch</a>
-            <a href="./rank">Rank</a>
+            <a href=".">Rank</a>
         </nav>
 
         <main id="main">
-            <div id="video-background">
-                <video autoplay muted loop id="video-highlight" controle="False">
-                    <source src="loop-web-video-720.mp4" type="video/mp4">
-                </video>
-            </div>
-
-            <div class="header-window">
-                <img id="jersey-image" src="bean.png" />
-            </div>
-
-            <div class="caption-window">
-                <h2>NA Valorant Rank Player</h2>
+            <div class="rank-headers-container">
+                <h2>BeanBaller Rank History</h2>
             </div>
 
             <div class="rank-window">
-                <h2>Rank History</h2>
-                <a v-for="rank in rank.rank_history" class="rank-container" :href="'https://tracker.gg/valorant/match/' + rank.match_id" target="_blank">
+                <a v-for="rank in rank_history" class="rank-container" :href="'https://tracker.gg/valorant/match/' + rank.match_id" target="_blank">
                     <div class="rank-image-container">
                         <div :class="[rank.map.toLowerCase() + '-bk', 'map-bk']"></div>
                     </div>
@@ -76,12 +65,11 @@
                         </div>
                     </div>
                 </a>
-                <a class="fetch-more-button" href="./rank">See More Rank</a>
+                <div v-if="loading" class="loading-graphic"></div>
+                <button v-else-if="lastEvalPuuidMatch !== ''" @click="fetchMoreRank" class="fetch-more-button">Load More Rank</button>
+                <p v-else class="no-rank-txt">No more rank</p>
             </div>
         </main>
-
-        <footer>
-        </footer>
 
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -91,38 +79,28 @@
             const app = createApp({
                 data() {
                     return {
-                        rank: {
-                            rank_history: [],
-                            loading: true,
-                            errors: false,
-                        },
-                        clip: {
-                            clip_data: null,
-                            loading: true,
-                            errors: false,
-                        }
+                        rank_history: [],
+                        loading: true,
+                        errors: false,
+                        lastEvalPuuidMatch: "",
+                        lastEvalRawDateTime: 0
                     }
                 },
                 mounted () {
                     axios({
                         method: 'get',
-                        url: "https://api.beanballer.com/history?pageLength=3"
+                        url: "https://api.beanballer.com/history?pageLength=10"
                     })
                     .then(response => {
-                        this.rank.rank_history = response.data.rank_history;
-                        this.rank.loading = false;
-                    });
-                    axios({
-                        method: 'get',
-                        url: "https://api.beanballer.com/clips?pageLength=1"
-                    })
-                    .then(response => {
-                        if (response?.data?.clips?.length == 1) {
-                            this.clip.clip_data = response.data.clips[0];
+                        this.rank_history = response.data.rank_history;
+                        this.loading = false;
+                        if (response.data.last_eval_keys == null) {
+                            this.lastEvalPuuidMatch = ""
+                            this.lastEvalRawDateTime = 0
                         } else {
-                            this.clip.errors = true;
+                            this.lastEvalPuuidMatch = response.data.last_eval_keys.last_eval_key_puuid_match
+                            this.lastEvalRawDateTime = response.data.last_eval_keys.last_eval_key_raw_date_int
                         }
-                        this.clip.loading = false;
                     });
                 },
                 methods: {
@@ -145,6 +123,26 @@
                             return "" + num;
                         }
                     },
+                    fetchMoreRank() {
+                        if (!this.loading && this.lastEvalPuuidMatch !== "" && this.lastEvalRawDateTime !== 0) {
+                            this.loading = true;
+                            axios({
+                                method: 'get',
+                                url: "https://api.beanballer.com/history?pageLength=10&lastEvalKeyPuuidMatch=" + this.lastEvalPuuidMatch + "&lastEvalKeyRawDateInt=" + this.lastEvalRawDateTime
+                            })
+                            .then(response => {
+                                this.rank_history = [...this.rank_history, ...response.data.rank_history];
+                                this.loading = false;
+                                if (response.data.last_eval_keys == null) {
+                                    this.lastEvalPuuidMatch = ""
+                                    this.lastEvalRawDateTime = 0
+                                } else {
+                                    this.lastEvalPuuidMatch = response.data.last_eval_keys.last_eval_key_puuid_match
+                                    this.lastEvalRawDateTime = response.data.last_eval_keys.last_eval_key_raw_date_int
+                                }
+                            });
+                        }
+                    }
                 }
             })
 
