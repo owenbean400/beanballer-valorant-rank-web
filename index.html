@@ -35,43 +35,43 @@
             </div>
 
             <div class="rank-window">
-                <h2>Rank History 3 Matches</h2>
-                <div v-for="item in items" class="rank-container">
+                <h2>Rank History</h2>
+                <div v-for="rank in rank.rank_history" class="rank-container">
                     <div class="rank-image-container">
-                        <div :class="[item.map.toLowerCase() + '-bk', 'map-bk']"></div>
+                        <div :class="[rank.map.toLowerCase() + '-bk', 'map-bk']"></div>
                     </div>
                     <div class="rank-info-container">
                         <div class="rank-game-container">
-                            <p class="rank-date-txt">{{ item.date }}</p>
+                            <p class="rank-date-txt">{{ rawDateIntRankToDateString(rank.raw_date_int) }}</p>
                             <div class="rank-map-container">
-                                <div :class="[item.character.toLowerCase().replace('/','') + '-bk', 'img']">
+                                <div :class="[rank.character.toLowerCase().replace('/','') + '-bk', 'img']">
                                 </div>
                                 <div>
-                                    <p class="rank-map-score-txt">{{ item.rounds_won }} : {{ item.rounds_lost }}</p>
-                                    <p class="rank-rr-txt">{{ item.mmr_change_to_last_game }}RR</p>
+                                    <p class="rank-map-score-txt">{{ rank.rounds_won }} : {{ rank.rounds_lost }}</p>
+                                    <p class="rank-rr-txt">{{ plusPadString(rank.mmr_change_to_last_game) }}RR</p>
                                 </div>
                             </div>
                         </div>
                         <div class="rank-stats-container">
-                            <div class="rank-stat-container">
-                                <p>ACS</p>
-                                <p>{{ Math.round(item.stats.score / (item.rounds_won + item.rounds_lost)) }}</p>
+                            <div class="rank-stat-container rank-stat-kda">
+                                <p class="rank-stat-txt-header">K/D/A</p>
+                                <p class="rank-stat-txt-info">{{ rank.stats.kills }}/{{ rank.stats.deaths }}/{{ rank.stats.assists }}</p>
                             </div>
                             <div class="rank-stat-container">
-                                <p>K | D | A</p>
-                                <p>{{ item.stats.kills }} | {{ item.stats.deaths }} | {{ item.stats.assists }}</p>
+                                <p class="rank-stat-txt-header">ACS</p>
+                                <p class="rank-stat-txt-info">{{ Math.round(rank.stats.score / (rank.rounds_won + rank.rounds_lost)) }}</p>
                             </div>
                             <div class="rank-stat-container">
-                                <p>K/D</p>
-                                <p>{{ (item.stats.kills / item.stats.deaths).toFixed(2) }}</p>
+                                <p class="rank-stat-txt-header">K/D</p>
+                                <p class="rank-stat-txt-info">{{ (rank.stats.kills / rank.stats.deaths).toFixed(2) }}</p>
                             </div>
                             <div class="rank-stat-container">
-                                <p>DD</p>
-                                <p>{{ item.stats.damage_made - item.stats.damage_received }}</p>
+                                <p class="rank-stat-txt-header">DD</p>
+                                <p class="rank-stat-txt-info">{{ plusPadString(Math.round((rank.stats.damage_made - rank.stats.damage_received) / (rank.rounds_won + rank.rounds_lost))) }}</p>
                             </div>
                             <div class="rank-stat-container">
-                                <p>HS%</p>
-                                <p>{{ Math.round((item.stats.headshots / (item.stats.headshots + item.stats.bodyshots + item.stats.legshots)) * 100) }}%</p>
+                                <p class="rank-stat-txt-header">HS%</p>
+                                <p class="rank-stat-txt-info">{{ Math.round((rank.stats.headshots / (rank.stats.headshots + rank.stats.bodyshots + rank.stats.legshots)) * 100) }}%</p>
                             </div>
                         </div>
                     </div>
@@ -82,6 +82,7 @@
         <footer>
         </footer>
 
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
         <script>
             const { createApp } = Vue
@@ -89,9 +90,61 @@
             const app = createApp({
                 data() {
                     return {
-                        count: 0,
-                        items: []
+                        rank: {
+                            rank_history: [],
+                            loading: true,
+                            errors: false,
+                        },
+                        clip: {
+                            clip_data: null,
+                            loading: true,
+                            errors: false,
+                        }
                     }
+                },
+                mounted () {
+                    axios({
+                        method: 'get',
+                        url: "https://api.beanballer.com/history?pageLength=3"
+                    })
+                    .then(response => {
+                        this.rank.rank_history = response.data.rank_history;
+                        this.rank.loading = false;
+                    });
+                    axios({
+                        method: 'get',
+                        url: "https://api.beanballer.com/clips?pageLength=1"
+                    })
+                    .then(response => {
+                        if (response?.data?.clips?.length == 1) {
+                            this.clip.clip_data = response.data.clips[0];
+                        } else {
+                            this.clip.errors = true;
+                        }
+                        this.clip.loading = false;
+                    });
+                },
+                methods: {
+                    rawDateIntRankToDateString(rawDateInt) {
+                        let dt = new Date(rawDateInt * 1000);
+                        let year = dt.getFullYear();
+                        let month = dt.getMonth() + 1;
+                        let day = dt.getDate();
+                        let hour = ((dt.getHours() + 1) % 12);
+                        let minute = dt.getMinutes();
+                        let second = dt.getSeconds();
+                        let amPm = (dt.getHours() >= 12) ? "PM" : "AM";
+                        let padding = (num) => (((num < 10) ? "0" : "") + num);
+                        return padding(month) + "/" + padding(day) + "/" + padding(year) + " " + padding(hour) + ":" + padding(minute) + ":" + padding(second) + " " + amPm;
+                    },
+                    plusPadString(num) {
+                        if (num > 0) {
+                            return "+" + num;
+                        } else {
+                            return "" + num;
+                        }
+                    },
+
                 }
             })
 
