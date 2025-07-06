@@ -5,18 +5,20 @@
         <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="style.css">
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="author" content="Owen Bean">
+        <meta name="description" content="NA Valorant rank player BeanBaller. BeanBaller has been playing Valorant for several years and has mainly play in NA rank. BeanBaller has peak Ascendent rank and was ECAC rookie of month in Feburary 2024 when playing in collegiate esports league.">
+        <title>BeanBaller</title>
     </head>
 
     <body>
         <nav>
-            <a href="https://valorantesports.com/en-US/pickems/113482053125573837/picks/1263478127707871988/5090123810564294632">Pick Ems</a>
-            <a href="https://tracker.gg/valorant/profile/riot/beanballer%20com%23web">Tracker</a>
-            <a href="./clips">Clips</a>
+            <a href="https://valorantesports.com/en-US/pickems/113482053125573837/picks/1263478127707871988/5090123810564294632">PickEms</a>
+            <a href="./rank">Rank</a>
             <div class="trapezoid">
                 <h1>BeanBaller</h1>
             </div>
+            <a href="./clips">Clips</a>
             <a href="https://www.twitch.tv/beaneballer">Twitch</a>
-            <a href="./rank">Rank</a>
         </nav>
 
         <main id="main">
@@ -30,8 +32,20 @@
                 <img id="jersey-image" src="bean.png" />
             </div>
 
-            <div class="caption-window">
-                <h2>NA Valorant Rank Player</h2>
+            <div class="video-header-container">
+                <div class="video-container">
+                    <div v-if="clip.loading">Loading...</div>
+                    <video
+                        v-else
+                        controls
+                        class="clip-video">
+                        <source :src="clip.clip_data.full_url" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="video-desc">
+                    <a class="fetch-more-button-white" href="./clips">View More Clips</a>
+                </div>
             </div>
 
             <div class="rank-window">
@@ -76,7 +90,7 @@
                         </div>
                     </div>
                 </a>
-                <a class="fetch-more-button" href="./rank">See More Rank</a>
+                <a class="fetch-more-button" href="./rank">View More Rank</a>
             </div>
         </main>
 

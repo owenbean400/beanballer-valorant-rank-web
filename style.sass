@@ -103,6 +103,7 @@ body
             #video-highlight
                 width: 100%
                 height: auto
+                -webkit-transform-style: preserve-3d
 
         .header-window
             background-color: white
@@ -119,6 +120,34 @@ body
                 margin: 0
                 padding: 32px 16px
                 text-align: center
+
+        .video-header-container
+            display: grid
+            background-color: $primaryColor
+            padding: 64px 16px
+            justify-content: center
+            grid-template-columns: auto
+
+            .video-desc
+                margin: 16px 0
+
+
+            .video-container
+                    background-color: black
+
+                    @media (max-width: 768px)
+                        width: 300px
+
+                        .clip-video
+                            width: 300px
+                            height: auto
+
+                    @media (min-width: 768px)
+                        width: 600px
+
+                        .clip-video
+                            width: 600px
+                            height: auto
 
         .rank-window
             background-color: white
@@ -331,6 +360,26 @@ body
             font-weight: normal
             &:hover
                 background-color: $primaryColorHighlight
+
+        .fetch-more-button-white
+            background-color: white
+            cursor: pointer
+            height: 64px
+            width: 196px
+            border-radius: 8px
+            border: none
+            color: black
+            margin: 8px auto
+            display: flex
+            text-align: center
+            text-decoration: none
+            padding-inline: 6px
+            align-items: center
+            justify-content: center
+            font-size: 18px
+            font-weight: normal
+            &:hover
+                background-color: #eee
 
         .loading-graphic
             margin: 8px auto
