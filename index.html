@@ -12,13 +12,13 @@
 
     <body>
         <nav>
-            <a href="https://valorantesports.com/en-US/pickems/113482053125573837/picks/1263478127707871988/5090123810564294632">PickEms</a>
-            <a href="./rank">Rank</a>
+            <a href="/clips">Clips</a>
+            <a href="/rank">Matches</a>
             <div class="trapezoid">
-                <h1>BeanBaller</h1>
+                <h1><a href="/">BeanBaller</a></h1>
             </div>
-            <a href="./clips">Clips</a>
-            <a href="https://www.twitch.tv/beaneballer">Twitch</a>
+            <a href="https://www.twitch.tv/beaneballer">TTV</a>
+            <a href="https://valorantesports.com/en-US/pickems/113482053125573837/picks/1263478127707871988/5090123810564294632">PickEms</a>
         </nav>
 
         <main id="main">
@@ -95,6 +95,15 @@
         </main>
 
         <footer>
+            <div class="footer-links">
+                <a href="https://valorantesports.com/en-US/pickems/113482053125573837/picks/1263478127707871988/5090123810564294632">PickEms</a>
+                <a href="/rank">Matches</a>
+                <a href="/clips">Clips</a>
+                <a href="https://www.twitch.tv/beaneballer">Twitch</a>
+                <a href="https://www.ecacesports.com/2024/03/ecac-esports-announces-player-and-rookie-of-the-month-for-february/">Ex ECAC Rookie</a>
+                <a href="https://tracker.gg/valorant/profile/riot/beanballer%20com%23web">Valorant Tracker</a>
+            </div>
+            <div class="footer-bottom">Host on AWS. <a href="https://github.com/owenbean400/valorant-rank-aws-api">API code</a>. <a href="https://github.com/owenbean400/beanballer-valorant-rank-web">Web Code</a>. Copyright @ Owen Bean</div>
         </footer>
 
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -148,8 +157,9 @@
                         let hour = ((dt.getHours() + 1) % 12);
                         let minute = dt.getMinutes();
                         let second = dt.getSeconds();
-                        let amPm = (dt.getHours() >= 12) ? "PM" : "AM";
+                        let amPm = (dt.getHours() != 23 && dt.getHours() + 1 >= 12) ? "PM" : "AM";
                         let padding = (num) => (((num < 10) ? "0" : "") + num);
+                        hour = (hour != 0) ? hour : 12
                         return padding(month) + "/" + padding(day) + "/" + padding(year) + " " + padding(hour) + ":" + padding(minute) + ":" + padding(second) + " " + amPm;
                     },
                     plusPadString(num) {
