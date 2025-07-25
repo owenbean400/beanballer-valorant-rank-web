@@ -25,22 +25,57 @@ body
             position: fixed
             background-color: black
             width: 100vw
-            height: 32px
-            display: flex
-            justify-content: center
             color: white
-            z-index: 9999
+            z-index: 999
 
-            a
-                font-size: 10px
-                padding: 0 8px
-                cursor: pointer
-                color: white
-                text-decoration: none
-                align-self: center
-                margin: 0 0 4px 0
-                &:hover
-                    color: $primaryColor
+            .show-navbar
+                margin: 0px
+
+            .hide-navbar
+                margin: -234px 0px 0px 0px
+
+            .nav-content
+                transition: margin 1s
+
+                ul
+                    display: flex
+                    flex-direction: column
+                    width: 100%
+                    padding: 0px
+                    margin: 0px
+                    text-align: center
+
+                    li
+                        list-style-type: none
+                        margin: 12px 0
+
+                        a
+                            font-size: 20px
+                            padding: 0 8px
+                            cursor: pointer
+                            color: white
+                            text-decoration: none
+                            align-self: end
+                            margin: 0 0 4px 0
+                            &:hover
+                                color: $primaryColor
+                
+                .toggle-containers
+                    display: flex
+                    justify-content: space-between
+                    padding: 8px 16px
+
+                    .arrow
+                        transition: transform 1s
+
+                    .down
+                        transform: rotate(0)
+
+                    .up-left
+                        transform: rotate(180deg)
+
+                    .up-right
+                        transform: rotate(-180deg)
 
             .trapezoid
                 --p: 50px
@@ -51,6 +86,8 @@ body
                 display: flex
                 justify-content: center
                 align-content: center
+                z-index: 9999
+                margin: 0 auto
                 h1
                     font-size: 16px
                     font-weight: regular
@@ -67,21 +104,41 @@ body
             position: fixed
             background-color: black
             width: 100vw
-            height: 32px
-            display: flex
-            justify-content: center
             color: white
-            z-index: 9999
+            z-index: 999
 
-            a
-                padding: 0 8px
-                cursor: pointer
-                color: white
-                text-decoration: none
-                align-self: center
-                margin: 0 0 4px 0
-                &:hover
-                    color: $primaryColor
+            .nav-content
+                margin: -52px 0 0 0
+
+                ul
+                    display: flex
+                    flex-direction: row
+                    width: 100%
+                    padding: 0px
+                    text-align: center
+                    justify-content: space-around
+                    margin: 0 0 16px 0
+
+                    .spacer
+                        flex-grow: 0.3
+
+                    li
+                        list-style-type: none
+                        margin: 0
+
+                        a
+                            font-size: 16px
+                            padding: 0px
+                            cursor: pointer
+                            color: white
+                            text-decoration: none
+                            align-self: end
+                            margin: 0 0 4px 0
+                            &:hover
+                                color: $primaryColor
+                
+                .toggle-containers
+                    display: none
 
             .trapezoid
                 --p: 50px
@@ -92,7 +149,8 @@ body
                 display: flex
                 justify-content: center
                 align-content: center
-                
+                z-index: 9999
+                margin: 0 auto
                 h1
                     font-size: 24px
                     font-weight: regular
