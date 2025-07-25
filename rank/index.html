@@ -11,14 +11,23 @@
     </head>
 
     <body>
-        <nav>
-            <a href="/clips">Clips</a>
-            <a href="/rank">Matches</a>
+        <nav id="nav">
             <div class="trapezoid">
                 <h1><a href="/">BeanBaller</a></h1>
             </div>
-            <a href="https://www.twitch.tv/beaneballer">TTV</a>
-            <a href="https://valorantesports.com/en-US/pickems/113482053125573837/picks/1263478127707871988/5090123810564294632">PickEms</a>
+            <div :class="['nav-content', (showNavBarPhone ? 'show-navbar' : 'hide-navbar')]">
+                <ul class="nav-link-list">
+                    <li><a href="/clips">Clips</a></li>
+                    <li><a href="/rank">Matches</a></li>
+                    <div class="spacer"></div>
+                    <li><a href="https://www.twitch.tv/beaneballer">TTV</a></li>
+                    <li><a href="https://valorantesports.com/en-US/pickems/113482053125573837/picks/1263478127707871988/5090123810564294632">PickEms</a></li>
+                </ul>
+                <div class="toggle-containers" @click="showNavBarPhone = !showNavBarPhone">
+                    <div :class="['arrow', (showNavBarPhone ? 'up-right': 'down')]">V</div>
+                    <div :class="['arrow', (showNavBarPhone ? 'up-left': 'down')]">V</div>
+                </div>
+            </div>
         </nav>
 
         <main id="main">
@@ -161,6 +170,15 @@
                 }
             })
 
+            const navApp = createApp({
+                data() {
+                    return {
+                        showNavBarPhone: false,
+                    }
+                },
+            });
+
+            navApp.mount('#nav')
             app.mount('#main')
         </script>
     </body>
