@@ -32,7 +32,7 @@ body
                 margin: 0px
 
             .hide-navbar
-                margin: -234px 0px 0px 0px
+                margin: -266px 0px 0px 0px
 
             .nav-content
                 transition: margin 1s
@@ -63,19 +63,24 @@ body
                 .toggle-containers
                     display: flex
                     justify-content: space-between
-                    padding: 8px 16px
+                    padding: 12px 16px
+                    cursor: pointer
 
                     .arrow
                         transition: transform 1s
+                        border: solid white
+                        border-width: 0 3px 3px 0
+                        display: inline-block
+                        padding: 4px
 
                     .down
-                        transform: rotate(0)
+                        transform: rotate(45deg)
 
                     .up-left
-                        transform: rotate(180deg)
+                        transform: rotate(225deg)
 
                     .up-right
-                        transform: rotate(-180deg)
+                        transform: rotate(-135deg)
 
             .trapezoid
                 --p: 50px
@@ -344,6 +349,20 @@ body
                                 @media (max-width: 768px)
                                     font-size: 16px
                                     font-weight: bold
+
+        .about-window
+            background-color: white
+            padding: 32px
+
+            h2
+                max-width: 960px
+                margin: 12px auto
+                color: black
+
+            p
+                max-width: 960px
+                color: black
+                margin: 12px auto
 
         .clip-headers-container
             text-align: center
