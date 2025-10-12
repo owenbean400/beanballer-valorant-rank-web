@@ -6,8 +6,8 @@
         <link rel="stylesheet" href="../style.css">
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="author" content="Owen Bean">
-        <meta name="description" content="NA Valorant rank player BeanBaller. BeanBaller rank clips with quick multi-kills happening.">
-        <title>BeanBaller Clips</title>
+        <meta name="description" content="The BeanBaller Val Rank Info app and the BeanBaller website collect anonymous analytics and crash logs to improve performance and reliability. No personal information is collected within the app.">
+        <title>BeanBaller Privacy Policy</title>
     </head>
 
     <body>
@@ -31,27 +31,14 @@
         </nav>
 
         <main id="main">
-            <div class="clip-headers-container">
-                <h2>BeanBaller Clips</h2>
+            <div class="privacy-headers-container">
+                <h2>Privacy Policy</h2>
             </div>
 
-            <div class="clips-container">
-                <div class="clip-container" v-for="clip in clips">
-                    <p>{{ clip.description }}</p>
-                    <div class="video-container">
-                        <video
-                            controls
-                            class="clip-video">
-                            <source :src="clip.full_url" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
-                    <a class="trapezoid" :href="'https://tracker.gg/valorant/match/' + clip.match_id" target="_blank">Tracker Match</a>
-                </div>
+            <div class="privacy-body-container">
+                <p>The BeanBaller Val Rank Info app and the BeanBaller website collect anonymous analytics and crash logs through Firebase to improve performance and reliability. No personal information is collected within the app.</p>
+                <p>For users who participate in Valorant ranked games in the same match as BeanBaller, gameplay data is collected and displayed within this app in accordance with Riot Games' Valorant Terms of Service.</p>
             </div>
-            <div v-if="loading" class="loading-graphic"></div>
-            <button v-else-if="lastEvalKey !== ''" @click="fetchMoreClips" class="fetch-more-button">Load More Clips</button>
-            <p v-else class="no-clip-txt">No more clips</p>
         </main>
 
         <footer>
@@ -68,48 +55,9 @@
             <div class="footer-bottom">Host on AWS. <a href="https://github.com/owenbean400/valorant-rank-aws-api">API code</a>. <a href="https://github.com/owenbean400/beanballer-valorant-rank-web">Web Code</a>. Copyright @ Owen Bean</div>
         </footer>
 
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
         <script>
             const { createApp } = Vue
-
-            const app = createApp({
-                data() {
-                    return {
-                        clips: [],
-                        lastEvalKey: "",
-                        loading: true,
-                    }
-                },
-                mounted () {
-                    axios({
-                        method: 'get',
-                        url: "https://api.beanballer.com/clips?pageLength=6&lastEvalKey=" + this.lastEvalKey
-                    })
-                    .then(response => {
-                        this.clips = response.data.clips;
-                        this.lastEvalKey = response.data.last_eval_key_uuid;
-                        this.loading = false;
-                    })
-                },
-                methods: {
-                    fetchMoreClips(event) {
-                        if (!this.loading && this.lastEvalKey !== "") {
-                            this.loading = true;
-                            axios({
-                                method: 'get',
-                                url: "https://api.beanballer.com/clips?pageLength=6&lastEvalKey=" + this.lastEvalKey
-                            })
-                            .then(response => {
-                                this.clips = [...this.clips, ...response.data.clips];
-                                this.lastEvalKey = response.data.last_eval_key_uuid;
-                                this.loading = false;
-                            })
-                        }
-                    }
-                }
-            })
-
 
             const navApp = createApp({
                 data() {
@@ -120,7 +68,6 @@
             });
 
             navApp.mount('#nav')
-            app.mount('#main')
         </script>
     </body>
 </html>

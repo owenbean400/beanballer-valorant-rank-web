@@ -1,0 +1,183 @@
+<html>
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="../../style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="author" content="Owen Bean">
+        <meta name="description" content="NA Valorant rank player BeanBaller. BeanBaller has been playing Valorant for several years and has mainly play in NA rank. BeanBaller has peak Ascendent rank and was ECAC rookie of month in Feburary 2024 when playing in collegiate esports league.">
+        <title>BeanBaller</title>
+    </head>
+
+    <body>
+        <nav id="nav">
+            <div class="trapezoid">
+                <h1><a href="/">BeanBaller</a></h1>
+            </div>
+            <div :class="['nav-content', (showNavBarPhone ? 'show-navbar' : 'hide-navbar')]">
+                <ul class="nav-link-list">
+                    <li><a href="/clips">Clips</a></li>
+                    <li><a href="/rank">Matches</a></li>
+                    <div class="spacer"></div>
+                    <li><a href="https://www.twitch.tv/beaneballer">TTV</a></li>
+                    <li><a href="https://valorantesports.com/en-US/pickems/113482053125573837/picks/1263478127707871988/5090123810564294632">PickEms</a></li>
+                </ul>
+                <div class="toggle-containers" @click="showNavBarPhone = !showNavBarPhone">
+                    <div :class="['arrow', (showNavBarPhone ? 'up-right': 'down')]"></div>
+                    <div :class="['arrow', (showNavBarPhone ? 'up-left': 'down')]"></div>
+                </div>
+            </div>
+        </nav>
+
+        <main id="main">
+            <div v-if="jobDetail?.status === 'loading'" class="ai-container">
+                <div class="loading-graphic" style="margin: 64px auto 320px auto"></div>
+            </div>
+            <div v-else-if="jobDetail?.status === 'pending'" class="ai-container">
+                <h1 class="ai-title">{{ jobDetail?.question || "" }}</h1>
+                <p class="ai-ask-dt">Asked at: {{ jobDetail?.createAt || "" }}</p>
+                <div class="loading-graphic" style="margin: 64px auto 256px auto"></div>
+            </div>
+            <div v-else-if="jobDetail?.status === 'complete'" class="ai-container">
+                <h1 class="ai-title">{{ jobDetail?.question || "" }}</h1>
+                <p class="ai-ask-dt">Asked at: {{ jobDetail?.createAt || "" }}</p>
+                <p class="ai-respond-dt">Respond at: {{ jobDetail?.lastUpdate || ""}}</p>
+                <p class="ai-response" v-html="jobDetail?.response.replace(/(?:\r\n|\r|\n)/g, '<br />')"></p>
+            </div>
+            <div v-else class="ai-container">
+                <p class="ai-response" style="margin: 64px auto 448px auto">Error with fetching question's response.</p>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-links">
+                <a href="https://valorantesports.com/en-US/pickems/113482053125573837/picks/1263478127707871988/5090123810564294632">PickEms</a>
+                <a href="/rank">Matches</a>
+                <a href="/clips">Clips</a>
+                <a href="/ai">AI Questions</a>
+                <a href="https://www.twitch.tv/beaneballer">Twitch</a>
+                <a href="https://www.ecacesports.com/2024/03/ecac-esports-announces-player-and-rookie-of-the-month-for-february/">Ex ECAC Rookie</a>
+                <a href="https://tracker.gg/valorant/profile/riot/beanballer%20com%23web">Valorant Tracker</a>
+                <a href="/privacyPolicy">Privacy Policy</a>
+            </div>
+            <div class="footer-bottom">Host on AWS. <a href="https://github.com/owenbean400/valorant-rank-aws-api">API code</a>. <a href="https://github.com/owenbean400/beanballer-valorant-rank-web">Web Code</a>. Copyright @ Owen Bean</div>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script>
+            const URL_PARAMS = new URLSearchParams(window.location.search);
+            const { createApp } = Vue;
+            const questionId = URL_PARAMS.get("questionId") || "";
+
+            const app = createApp({
+                data() {
+                    return {
+                    jobDetail: {
+                        status: "loading",
+                        questionId: questionId,
+                        question: "",
+                        response: "",
+                        createAt: "",
+                        lastUpdate: ""
+                    },
+                    pollInterval: null,
+                    };
+                },
+                beforeUnmount() {
+                    if (this.pollInterval) clearInterval(this.pollInterval);
+                },
+                mounted() {
+                    this.fetchAPIQuestion(this.jobDetail.questionId, 0);
+                },
+                methods: {
+                    dateStringDisplay(rawDateStr) {
+                        if (!rawDateStr) return "Unknown";
+                        return new Date(rawDateStr).toLocaleString(undefined, {
+                            year: "numeric",
+                            month: "2-digit",
+                            day: "2-digit",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            second: "2-digit",
+                            hour12: true,
+                        });
+                    },
+
+                    async fetchAPIQuestion(currentJobId, delayMs) {
+                        if (delayMs > 0) {
+                            await new Promise((resolve) => setTimeout(resolve, delayMs));
+                        }
+
+                        try {
+                            const response = await axios.get(
+                                "https://ai.beanballer.com/v1/question/job/" + currentJobId
+                            );
+
+                            if (response.status !== 200) {
+                                this.jobDetail.status =
+                                    response.status === 400 ? "notFound" : "error";
+                                return;
+                            }
+
+                            const data = response.data;
+
+                            if (data.status === "Complete") {
+                                this.jobDetail = {
+                                    ...this.jobDetail,
+                                    question: data.question,
+                                    response: data.response,
+                                    createAt: this.dateStringDisplay(data.createAt),
+                                    lastUpdate: this.dateStringDisplay(data.lastUpdate),
+                                    status: "complete",
+                                };
+
+                                if (this.pollInterval) clearInterval(this.pollInterval);
+
+                                return;
+                            }
+
+                            if (data.status === "Pending") {
+                                this.jobDetail = {
+                                    ...this.jobDetail,
+                                    question: data.question,
+                                    response: data.response,
+                                    createAt: this.dateStringDisplay(data.createAt),
+                                    lastUpdate: this.dateStringDisplay(data.lastUpdate),
+                                    status: "pending",
+                                }
+
+                                if (!this.pollInterval) {
+                                    this.pollInterval = setTimeout(() => {
+                                        this.fetchAPIQuestion(currentJobId, 0);
+
+                                        this.pollInterval = setInterval(() => {
+                                            this.fetchAPIQuestion(currentJobId, 0);
+                                        }, 10000);
+                                    }, 15000);
+                                }
+                            } else {
+                                this.jobDetail.status = "error";
+                            }
+                        } catch (e) {
+                            console.error(e);
+                            this.jobDetail.status = "error";
+                        }
+                    },
+                },
+            });
+
+            const navApp = createApp({
+                data() {
+                    return {
+                        showNavBarPhone: false,
+                    }
+                },
+            });
+
+            navApp.mount('#nav')
+            app.mount('#main')
+        </script>
+    </body>
+</html>

@@ -103,6 +103,27 @@
                 <a class="fetch-more-button" href="./rank">View More Rank</a>
             </div>
 
+            <div class="ai-window">
+                <h2>Want to know more about BeanBaller Gameplay?</h2>
+                <div :class="ai.loading ? ['ai-question-container', 'ai-question-container-loading'] : ['ai-question-container']">
+                    <input
+                        class="ai-question-input"
+                        maxlength="100"
+                        placeholder="Ask a question about BeanBaller's last 10 Valorant rank games"
+                        :value="ai.question"
+                        @input="event => ai.question = event.target.value"
+                        @keyup.enter="generateQuestionId()"
+                        >
+                    </input>
+                    <button :class="ai.question !== '' ? ['ai-question-button', 'ai-question-button-enable'] : ['ai-question-button', 'ai-question-button-disable']" @click="generateQuestionId()"><svg v-if="ai.question !== ''" xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#000000"><path d="M360-144v-144H192l288-336 288 336H600v144H360Zm72-72h96v-144h84L480-514 348-360h84v144ZM192-480l288-336 288 336h-95L480-706 287-480h-95Zm288 120Z"/></svg></button>
+                </div>
+                <div class="ai-question-label-container">
+                    <p class="ai-question-label" v-if="ai.loading">Loading...</p>
+                    <p class="ai-question-label" v-else-if="ai.error">Error asking question</p>
+                    <p class="ai-question-label" v-else>{{ ai.question.length }}/100</p>
+                </div>
+            </div>
+
             <div class="about-window">
                 <h2>About</h2>
                 <p>Owen "BeanBaller" Bean is a competitive Valorant player from the NA region, known for his strategic play and deep agent mastery. His primary agent is Astra, chosen for her powerful utility and his proficiency with a lurking smokes-based playstyle. Depending on the map, he flexes into other roles—playing Gekko or Sova as an Initiator, and Killjoy or Cypher as a Sentinel. On Bind, he excels with Brimstone, utilizing his kit to full advantage on that specific map.</p>
@@ -115,9 +136,11 @@
                 <a href="https://valorantesports.com/en-US/pickems/113482053125573837/picks/1263478127707871988/5090123810564294632">PickEms</a>
                 <a href="/rank">Matches</a>
                 <a href="/clips">Clips</a>
+                <a href="/ai">AI Questions</a>
                 <a href="https://www.twitch.tv/beaneballer">Twitch</a>
                 <a href="https://www.ecacesports.com/2024/03/ecac-esports-announces-player-and-rookie-of-the-month-for-february/">Ex ECAC Rookie</a>
                 <a href="https://tracker.gg/valorant/profile/riot/beanballer%20com%23web">Valorant Tracker</a>
+                <a href="/privacyPolicy">Privacy Policy</a>
             </div>
             <div class="footer-bottom">Host on AWS. <a href="https://github.com/owenbean400/valorant-rank-aws-api">API code</a>. <a href="https://github.com/owenbean400/beanballer-valorant-rank-web">Web Code</a>. Copyright @ Owen Bean</div>
         </footer>
@@ -139,6 +162,12 @@
                             clip_data: null,
                             loading: true,
                             errors: false,
+                        },
+                        ai: {
+                            question: "",
+                            jobId: "",
+                            error: false,
+                            loading: false,
                         }
                     }
                 },
@@ -185,6 +214,39 @@
                             return "" + num;
                         }
                     },
+                    async generateQuestionId() {
+                        if (this.ai.question && this.ai.question !== "" && !this.ai.loading) {
+                            this.ai.loading = true;
+
+                            try {
+                                const data = {
+                                    url: "https://ai.beanballer.com/v1/question",
+                                    body: {
+                                        question: this.ai.question
+                                    },
+                                    headers: {
+                                        'Accept':       'application/json',
+                                        'Content-Type': 'application/json',
+                                    }
+                                }
+
+                                const response = await axios.post(data.url, data.body, data.headers);
+
+                                if (response.status === 202 && response.data.jobId && response.data.jobId !== "") {
+                                    this.ai.error = false;
+                                    window.location.href = '/ai/job?questionId=' + response.data.jobId;
+                                    this.ai.loading = false;
+                                } else {
+                                    this.ai.error = true;
+                                    this.ai.loading = false;
+                                }
+                            } catch (e) {
+                                console.error(e);
+                                this.ai.error = true;
+                                this.ai.loading = false;
+                            }
+                        }
+                    }
                 }
             })
 

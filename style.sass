@@ -2,6 +2,8 @@ $bgColor: #EEEEEE
 $breakpoints: (phone: 640px, tablet: 768px, desktop: 1024px)
 $primaryColor: rgb(255, 70, 85)
 $primaryColorHighlight: rgb(255, 112, 124)
+$primaryColorActive: rgb(255, 153, 162)
+$primaryDisable: rgb(117, 104, 105)
 
 @keyframes loading-animation
     0%
@@ -14,6 +16,14 @@ $primaryColorHighlight: rgb(255, 112, 124)
         background-position:0 100%,66.6% 0
     100%
         background-position:33.4% 100%,66.6% 100%
+
+@keyframes loading-color-animation
+    0%
+        background-color: white
+    50%
+        background-color: #CCC
+    100%
+        background-color: white
 
 body
     padding: 0
@@ -364,6 +374,165 @@ body
                 color: black
                 margin: 12px auto
 
+        .ai-menu-container
+            width: 100%
+            height: calc(100vh - 256px)
+            display: flex
+            justify-content: center
+            @media (max-width: 768px)
+                align-items: start
+            @media (min-width: 768px)
+                align-items: center
+
+            .ai-message-container
+                max-width: 960px
+                border-radius: 8px
+
+                @media (max-width: 768px)
+                    padding: 16px
+                @media (min-width: 768px)
+                    padding: 32px
+                    background-color: $primaryColor
+
+                h2
+                    max-width: 960px
+                    margin: 12px auto
+                    color: black
+
+                .ai-question-container
+                    max-width: 960px
+                    margin: 12px auto 0 auto
+                    height: 48px
+                    border-radius: 8px
+                    display: flex
+                    justify-content: space-between
+                    align-items: center
+                    @media (max-width: 768px)
+                        background-color: #DDD
+                        padding: 8px
+                    @media (min-width: 768px)
+                        padding: 0px
+                        background-color: white
+
+                    .ai-question-input
+                        width: calc(100% - 48px)
+                        height: 48px
+                        border-radius: 8px
+                        border: none
+                        padding: 0 16px
+                        font-family: "Kanit", sans-serif
+                        background-color: white
+                        &:focus
+                            border: none
+                            outline: none
+                            box-shadow: none
+
+                        @media (min-width: 768px)
+                            padding: 0 0 0 16px
+                        @media (max-width: 768px)
+                            padding: 0 16px
+
+                    .ai-question-button
+                        margin: 0 8px 0 0
+                        height: 32px
+                        width: 32px
+                        border-radius: 8px
+                        border: none
+
+                    .ai-question-button-enable
+                        background-color: $primaryColor
+                        cursor: pointer
+                        &:hover
+                            background-color: $primaryColorHighlight
+                        &:active
+                            background-color: $primaryColorActive
+
+                    .ai-question-button-disable
+                        background-color: $primaryDisable
+                        cursor: not-allowed
+
+                .ai-question-container-loading
+                    animation: loading-color-animation 1.5s infinite linear
+
+                    .ai-question-input
+                        animation: loading-color-animation 1.5s infinite linear
+
+                .ai-question-label-container
+                    max-width: 960px
+                    margin: 0 auto
+                    text-align: right
+
+                    .ai-question-label
+                        float: right
+                        margin: 4px 8px 0 0
+
+
+        .ai-window
+            background-color: $primaryColor
+            padding: 64px 32px 96px 32px
+
+            h2
+                max-width: 960px
+                margin: 12px auto
+                color: black
+
+            .ai-question-container
+                max-width: 960px
+                margin: 12px auto 0 auto
+                background-color: white
+                height: 48px
+                border-radius: 8px
+                display: flex
+                justify-content: space-between
+                align-items: center
+
+                .ai-question-input
+                    width: calc(100% - 48px)
+                    height: 48px
+                    border-radius: 8px
+                    border: none
+                    padding: 0 16px
+                    font-family: "Kanit", sans-serif
+                    background-color: white
+                    &:focus
+                        border: none
+                        outline: none
+                        box-shadow: none
+
+                .ai-question-button
+                    margin: 0 8px 0 0
+                    height: 32px
+                    width: 32px
+                    border-radius: 8px
+                    border: none
+
+                .ai-question-button-enable
+                    background-color: $primaryColor
+                    cursor: pointer
+                    &:hover
+                        background-color: $primaryColorHighlight
+                    &:active
+                        background-color: $primaryColorActive
+
+                .ai-question-button-disable
+                    background-color: $primaryDisable
+                    cursor: not-allowed
+
+            .ai-question-container-loading
+                animation: loading-color-animation 1.5s infinite linear
+
+                .ai-question-input
+                    animation: loading-color-animation 1.5s infinite linear
+
+            .ai-question-label-container
+                max-width: 960px
+                margin: 0 auto
+                text-align: right
+
+                .ai-question-label
+                    float: right
+                    margin: 4px 8px 0 0
+
         .clip-headers-container
             text-align: center
             margin-top: 80px
@@ -507,6 +676,37 @@ body
             color: black
             text-align: center
 
+        .privacy-headers-container
+            text-align: center
+            margin: 80px 16px 16px 16px
+
+        .privacy-body-container
+            margin: 16px auto
+            padding: 0 16px
+            max-width: 600px
+            font-size: 16px
+
+        .ai-container
+            padding: 32px
+            margin: 0 auto
+            max-width: 600px
+
+            .ai-title
+                font-size: 24px
+                font-weight: bold
+
+            .ai-ask-dt
+                font-size: 12px
+                font-weight: light
+                margin: 0
+
+            .ai-respond-dt
+                font-size: 12px
+                font-weight: light
+                margin: 0
+
+            .ai-response
+                margin: 16px 0 0 0
     
     footer
         font-size: 12px
