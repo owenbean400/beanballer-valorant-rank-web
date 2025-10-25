@@ -36,17 +36,17 @@ Here's the power behind the scenes:
 BeanBaller's game history tracks recent ranked matches, providing up-to-date stats and performance summaries.
 Perfect for seeing how the climb is going ⬆️
 
-👉 [rank/index.html](www.beanballer.com/rank)
+👉 [rank/index.html](https://www.beanballer.com/rank)
 
 ### 🎬 Gameplay Clips
 
 Watch highlight moments and epic multi-kills 🎯
 
-👉 [clips/index.html](www.beanballer.com/clips)
+👉 [clips/index.html](https://www.beanballer.com/clips)
 
 ### 💬 AI Chatbot
 
 Curious about BeanBaller's recent games?
 Ask the AI chatbot anything about the last 10 ranked matches, and get instant insights powered by AI ⚡
 
-👉 [ai/index.html](www.beanballer.com/ai)
+👉 [ai/index.html](https://www.beanballer.com/ai)
