@@ -4,6 +4,8 @@ $primaryColor: rgb(255, 70, 85)
 $primaryColorHighlight: rgb(255, 112, 124)
 $primaryColorActive: rgb(255, 153, 162)
 $primaryDisable: rgb(117, 104, 105)
+$darkGrayColor: #1e2939
+$grayColor: #99a1af
 
 @keyframes loading-animation
     0%
@@ -17,13 +19,21 @@ $primaryDisable: rgb(117, 104, 105)
     100%
         background-position:33.4% 100%,66.6% 100%
 
-@keyframes loading-color-animation
+@keyframes loading-color-animation-white
     0%
         background-color: white
     50%
         background-color: #CCC
     100%
         background-color: white
+
+@keyframes loading-color-animation-black
+    0%
+        background-color: $darkGrayColor
+    50%
+        background-color: #111
+    100%
+        background-color: $darkGrayColor
 
 body
     padding: 0
@@ -35,8 +45,9 @@ body
             position: fixed
             background-color: black
             width: 100vw
-            color: white
+            color: $grayColor
             z-index: 999
+            border-bottom: $darkGrayColor solid 2px
 
             .show-navbar
                 margin: 0px
@@ -63,7 +74,7 @@ body
                             font-size: 20px
                             padding: 0 8px
                             cursor: pointer
-                            color: white
+                            color: $grayColor
                             text-decoration: none
                             align-self: end
                             margin: 0 0 4px 0
@@ -119,8 +130,9 @@ body
             position: fixed
             background-color: black
             width: 100vw
-            color: white
+            color: $grayColor
             z-index: 999
+            border-bottom: $darkGrayColor solid 2px
 
             .nav-content
                 margin: -52px 0 0 0
@@ -145,7 +157,7 @@ body
                             font-size: 16px
                             padding: 0px
                             cursor: pointer
-                            color: white
+                            color: $grayColor
                             text-decoration: none
                             align-self: end
                             margin: 0 0 4px 0
@@ -178,7 +190,7 @@ body
                         text-decoration: none
 
     main
-        padding: 32px 0 48px 0
+        padding: 32px 0 0 0
 
         #video-background
             width: 100%
@@ -207,8 +219,7 @@ body
 
         .video-header-container
             display: grid
-            background-color: $primaryColor
-            padding: 64px 16px
+            padding: 0
             justify-content: center
             grid-template-columns: auto
 
@@ -218,24 +229,34 @@ body
 
             .video-container
                     background-color: black
+                    overflow: hidden
 
                     @media (max-width: 768px)
-                        width: 300px
+                        width: calc(100vw - 15px)
 
                         .clip-video
-                            width: 300px
-                            height: auto
+                            height: calc(0.5625 * (100vw - 15px))
 
                     @media (min-width: 768px)
-                        width: 600px
+                        width: 720px
+                        border-radius: 8px
 
                         .clip-video
-                            width: 600px
-                            height: auto
+                            height: 405px
+                    
+                    .clip-video
+                        border: none
+                        width: 100%
 
-        .rank-window
-            background-color: white
+        .rank-window-index
+            background-color: $primaryColor
             padding: 32px
+
+        .rank-window-tab
+            background-color: white
+            padding: 32px 32px 96px 32px
+
+        .rank-display
 
             h2
                 max-width: 960px
@@ -361,18 +382,19 @@ body
                                     font-weight: bold
 
         .about-window
-            background-color: white
-            padding: 32px
+            background-color: black
+            padding: 32px 32px 64px 32px
 
             h2
                 max-width: 960px
                 margin: 12px auto
-                color: black
+                color: $grayColor
 
             p
                 max-width: 960px
-                color: black
-                margin: 12px auto
+                color: $grayColor
+                margin: 0 auto
+                padding: 0 0 32px 0
 
         .ai-menu-container
             width: 100%
@@ -452,10 +474,10 @@ body
                         cursor: not-allowed
 
                 .ai-question-container-loading
-                    animation: loading-color-animation 1.5s infinite linear
+                    animation: loading-color-animation-white 1.5s infinite linear
 
                     .ai-question-input
-                        animation: loading-color-animation 1.5s infinite linear
+                        animation: loading-color-animation-white 1.5s infinite linear
 
                 .ai-question-label-container
                     max-width: 960px
@@ -468,18 +490,19 @@ body
 
 
         .ai-window
-            background-color: $primaryColor
-            padding: 64px 32px 96px 32px
+            background: linear-gradient(0deg,rgba(0, 0, 0, 1) 0%, rgba(41, 0, 0, 1) 79%, rgba(59, 0, 0, 1) 100%)
+            padding: 64px 32px 64px 32px
 
             h2
                 max-width: 960px
                 margin: 12px auto
-                color: black
+                text-align: center
+                color: $grayColor
 
             .ai-question-container
                 max-width: 960px
                 margin: 12px auto 0 auto
-                background-color: white
+                background-color: $darkGrayColor
                 height: 48px
                 border-radius: 8px
                 display: flex
@@ -493,11 +516,14 @@ body
                     border: none
                     padding: 0 16px
                     font-family: "Kanit", sans-serif
-                    background-color: white
+                    background-color: $darkGrayColor
+                    color: $grayColor
                     &:focus
-                        border: none
+                        border: 1px solid $primaryColor
                         outline: none
                         box-shadow: none
+                    &:placeholder-shown
+                        color: $grayColor
 
                 .ai-question-button
                     margin: 0 8px 0 0
@@ -519,10 +545,10 @@ body
                     cursor: not-allowed
 
             .ai-question-container-loading
-                animation: loading-color-animation 1.5s infinite linear
+                animation: loading-color-animation-black 1.5s infinite linear
 
                 .ai-question-input
-                    animation: loading-color-animation 1.5s infinite linear
+                    animation: loading-color-animation-black 1.5s infinite linear
 
             .ai-question-label-container
                 max-width: 960px
@@ -545,60 +571,83 @@ body
                 font-size: 18px
                 margin: 4px 0
 
-        .clips-container
-            display: flex
-            flex-wrap: wrap
-            justify-content: center
-            max-width: 2000px
-            margin: 12px auto 32px auto
+        .clips-container-buttons
+            padding: 0px 0px 96px 0px
 
-            .clip-container
-                @media (max-width: 768px)
-                    margin: 12px
-                @media (min-width: 768px)
-                    margin: 24px
+            .clips-container
+                display: flex
+                flex-wrap: wrap
+                justify-content: center
+                max-width: 2000px
+                margin: 12px auto 32px auto
 
-                .trapezoid
-                    --p: 50px
-                    height: 32px
-                    aspect-ratio: 16/2
-                    clip-path: polygon(var(--p) 100%,calc(100% - var(--p)) 100%,100% 0,0 0)
-                    background: $primaryColor
-                    display: flex
-                    justify-content: center
-                    align-content: center
-                    margin: 0px auto
-                    cursor: pointer
-                    text-decoration: none
-                    color: black
-                    padding: 4px 0 0 0
-                    &:hover
-                        background: $primaryColorHighlight
-                    
-                    a
-                        font-weight: regular
-                        margin-top: 4px
-                        color: black
-                        text-decoration: none
-
-                .video-container
-                    background-color: black
-
+                .clip-container
                     @media (max-width: 768px)
-                        width: 300px
-
-                        .clip-video
-                            width: 300px
-                            height: auto
-
+                        margin: 12px
                     @media (min-width: 768px)
-                        width: 600px
+                        margin: 24px
 
-                        .clip-video
+                    .trapezoid
+                        --p: 50px
+                        height: 32px
+                        aspect-ratio: 16/2
+                        clip-path: polygon(var(--p) 100%,calc(100% - var(--p)) 100%,100% 0,0 0)
+                        background: $primaryColor
+                        display: flex
+                        justify-content: center
+                        align-content: center
+                        margin: 0px auto
+                        cursor: pointer
+                        text-decoration: none
+                        color: black
+                        padding: 4px 0 0 0
+                        &:hover
+                            background: $primaryColorHighlight
+                        
+                        a
+                            font-weight: regular
+                            margin-top: 4px
+                            color: black
+                            text-decoration: none
+
+                    .video-container
+                        background-color: black
+
+                        @media (max-width: 768px)
+                            width: 300px
+
+                            .clip-video
+                                width: 300px
+                                height: auto
+
+                        @media (min-width: 768px)
                             width: 600px
-                            height: auto
+
+                            .clip-video
+                                width: 600px
+                                height: auto
 
         .fetch-more-button
+            background-color: black
+            cursor: pointer
+            height: 64px
+            width: 196px
+            border-radius: 8px
+            border: none
+            color: $grayColor
+            margin: 8px auto
+            display: flex
+            text-align: center
+            text-decoration: none
+            padding-inline: 6px
+            align-items: center
+            justify-content: center
+            font-size: 18px
+            font-weight: normal
+            &:hover
+                background-color: $darkGrayColor
+
+        .fetch-more-button-white
             background-color: $primaryColor
             cursor: pointer
             height: 64px
@@ -617,26 +666,6 @@ body
             font-weight: normal
             &:hover
                 background-color: $primaryColorHighlight
-
-        .fetch-more-button-white
-            background-color: white
-            cursor: pointer
-            height: 64px
-            width: 196px
-            border-radius: 8px
-            border: none
-            color: black
-            margin: 8px auto
-            display: flex
-            text-align: center
-            text-decoration: none
-            padding-inline: 6px
-            align-items: center
-            justify-content: center
-            font-size: 18px
-            font-weight: normal
-            &:hover
-                background-color: #eee
 
         .loading-graphic
             margin: 8px auto
@@ -711,29 +740,43 @@ body
     footer
         font-size: 12px
         font-weight: light
-        margin: 8px auto 0 auto
-        background-color: $primaryColor
+        margin: 0
+        background-color: black
+        border-top: 2px solid $darkGrayColor
 
         .footer-links
             display: grid
             padding: 64px 32px
+            max-width: 960px
+            display: flex
+            flex-wrap: wrap
+            justify-content: space-around
+            margin: 0 auto
             @media (min-width: 768px)
                 font-size: 18px
-                grid-template-columns: 200px 200px 200px
-                justify-content: space-around
             @media (max-width: 768px)
                 font-size: 16px
-                grid-template-columns: auto
 
-        a
-            color: black
-            text-decoration: none
-            &:hover
-                color: white
+            a
+                color: $grayColor
+                text-decoration: none
+                padding: 4px 4px
+                margin: 4px 4px
+                &:hover
+                    color: $primaryColor
 
         .footer-bottom
-            padding: 4px 16px 4px 4px
-            text-align: right
+            padding: 8px
+            text-align: center
+            color: $grayColor
+
+            a
+                color: $grayColor
+                text-decoration: none
+                padding: 4px 0
+                margin: 4px 0
+                &:hover
+                    color: $primaryColor
 
 .map-bk
     background-position: center

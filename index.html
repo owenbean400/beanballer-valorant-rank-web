@@ -43,22 +43,16 @@
 
             <div class="video-header-container">
                 <div class="video-container">
-                    <div v-if="clip.loading">Loading...</div>
-                    <div v-else-if="clip.errors">Error Loading Clip</div>
-                    <video
-                        v-else
-                        controls
-                        class="clip-video">
-                        <source :src="clip.clip_data.full_url" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
+                    <iframe
+                        class="clip-video"
+                        src="https://www.youtube.com/embed/YGzMwCySqL8?autoplay=1&mute=1"></iframe>
                 </div>
                 <div class="video-desc">
-                    <a class="fetch-more-button-white" href="./clips">View More Clips</a>
+                    <a class="fetch-more-button" href="./clips">View More Clips</a>
                 </div>
             </div>
 
-            <div class="rank-window">
+            <div class="rank-window-index rank-display">
                 <h2>Rank History</h2>
                 <a v-for="rank in rank.rank_history" class="rank-container" :href="'https://tracker.gg/valorant/match/' + rank.match_id" target="_blank">
                     <div class="rank-image-container">
@@ -126,7 +120,7 @@
 
             <div class="about-window">
                 <h2>About</h2>
-                <p>Owen "BeanBaller" Bean is a competitive Valorant player from the NA region, known for his strategic play and deep agent mastery. His primary agent is Astra, chosen for her powerful utility and his proficiency with a lurking smokes-based playstyle. Depending on the map, he flexes into other roles—playing Gekko or Sova as an Initiator, and Killjoy or Cypher as a Sentinel. On Bind, he excels with Brimstone, utilizing his kit to full advantage on that specific map.</p>
+                <p>Owen "BeanBaller" Bean is a competitive Valorant player from the NA region, known for his strategic play and deep agent mastery. His primary agent is Astra, chosen for her powerful utility and his proficiency with a lurking smokes-based playstyle. Depending on the map, he flexes into other roles-playing Gekko or Sova as an Initiator, and Killjoy or Cypher as a Sentinel. On Bind, he excels with Brimstone, utilizing his kit to full advantage on that specific map.</p>
                 <p>BeanBaller competed in the ECAC during Spring semester as part of the University of Southern Maine (USM) Esports Club, where his dedication and performance earned him the title of Rookie of the Month. The season concluded at the end of the semester, coinciding with his graduation from USM with a degree in Computer Science.</p>
             </div>
         </main>
@@ -142,11 +136,11 @@
                 <a href="https://tracker.gg/valorant/profile/riot/beanballer%20com%23web">Valorant Tracker</a>
                 <a href="/privacyPolicy">Privacy Policy</a>
             </div>
-            <div class="footer-bottom">Host on AWS. <a href="https://github.com/owenbean400/valorant-rank-aws-api">API code</a>. <a href="https://github.com/owenbean400/beanballer-valorant-rank-web">Web Code</a>. Copyright @ Owen Bean</div>
+            <div class="footer-bottom"><a href="https://github.com/owenbean400/valorant-rank-aws-api">API code</a>. <a href="https://github.com/owenbean400/valorant-rank-ai-aws-lamda">AI code</a>. <a href="https://github.com/owenbean400/beanballer-valorant-rank-web">Web Code</a>. Copyright @ Owen Bean</div>
         </footer>
 
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
         <script>
             const { createApp } = Vue
 
