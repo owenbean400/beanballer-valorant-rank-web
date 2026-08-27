@@ -32,14 +32,14 @@
 
         <main id="main">
             <div class="header-window">
-                <img id="jersey-image" src="bean.png" />
+                <img id="jersey-image" src="bean.png" alt="BeanBaller" />
             </div>
 
             <div class="video-header-container">
                 <div class="video-container">
                     <iframe
                         class="clip-video"
-                        src="https://www.youtube.com/embed/Ep6_amnAbMw?autoplay=1&mute=1"></iframe>
+                        src="https://www.youtube.com/embed/U1pS8b1LIsI?autoplay=1&mute=1"></iframe>
                 </div>
                 <div class="video-desc">
                     <a class="fetch-more-button" href="./clips">View More Clips</a>
@@ -109,6 +109,13 @@
                     <p class="ai-question-label" v-if="ai.loading">Loading...</p>
                     <p class="ai-question-label" v-else-if="ai.error">Error asking question</p>
                     <p class="ai-question-label" v-else>{{ ai.question.length }}/100</p>
+                </div>
+            </div>
+            
+            <div class="ban-window">
+                <h2>#Free Bean</h2>
+                <div class="ban-image-container">
+                    <img id="ban-image" src="ban.png" alt="BeanBaller Ban" />
                 </div>
             </div>
 
